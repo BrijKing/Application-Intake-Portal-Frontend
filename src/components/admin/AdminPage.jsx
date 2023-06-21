@@ -6,7 +6,6 @@ import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 
 
-
 const AdminPage = () => {
 
   const [admin, setAdmin] = useState(false)
@@ -25,6 +24,7 @@ const AdminPage = () => {
   useEffect(() => {
     userMail != null ? (userRole == "Admin" ? setAdmin(true) : window.location.href = "/") : window.location.href = "/"
   }, [])
+  
   const navigation = [
     { name: 'Customers', href: 'list', current: true },
     { name: 'Add', href: 'add', current: false },
@@ -38,10 +38,6 @@ const AdminPage = () => {
       <Navbar navigation={navigation} />
       <Outlet />
     </> : ""
-
-
-
-
   )
 }
 

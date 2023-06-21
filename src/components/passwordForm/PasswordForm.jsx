@@ -113,22 +113,7 @@ const PasswordForm = () => {
            <option value="ROLE_AGENT">Agent</option>
            <option value="ROLE_REVIEWER">Reviewer</option>
          </select> */}
-         <label htmlFor="Role">Role</label>
-          <select
-            name=""
-            id="Role"
-            className="shadow appearance-none border rounded  py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            {...register("role", {
-              required: "Role is required",
-            })}
-          >
-            <option selected disabled>
-              Select Role
-            </option>
-            <option value="ROLE_ADMIN">Admin</option>
-            <option value="ROLE_AGENT">Agent</option>
-            <option value="ROLE_REVIEWER">Reviewer</option>
-          </select>
+        
                    <p style={{ color: "red" }}>{errors.password?.message}</p>
                    <button className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-full">
                        {loginButtonText}

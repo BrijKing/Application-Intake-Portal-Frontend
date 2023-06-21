@@ -1,27 +1,23 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { loginAPI } from "../../services/AuthorizationService";
 import jwt from 'jwt-decode'
-
 import { useAuth } from "../../utils/auth";
 import { Toaster, toast } from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
 
 function Login() {
   const [user, setUser] = useState({});
-  const [loginButtonText,setLoginText]=useState("Login")
-  const params=useParams();
+  const [loginButtonText, setLoginText] = useState("Login")
+  const params = useParams();
   console.log(params)
-   const navigate = useNavigate();
-  const auth=useAuth();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const navigate = useNavigate();
+  const auth = useAuth();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const formSubmit = (data) => {
     // setCredentials(data);
     // console.log(data);
@@ -31,29 +27,25 @@ function Login() {
       const token = jwt(res.data);
       console.log(token)
       auth.login(token);
-      if(token.authorities=="ROLE_ADMIN")
-      {
-        navigate("/admin_page",{replace:true})
+      if (token.authorities == "ROLE_ADMIN") {
+        navigate("/admin_page", { replace: true })
       }
-      if(token.authorities=="ROLE_REVIEWER")
-      {
-        navigate("/reviewer_page",{replace:true})
+      if (token.authorities == "ROLE_REVIEWER") {
+        navigate("/reviewer_page", { replace: true })
       }
-      if(token.authorities=="ROLE_AGENT")
-      {
-        navigate("/agent_page",{replace:true})
+      if (token.authorities == "ROLE_AGENT") {
+        navigate("/agent_page", { replace: true })
       }
       // if(data.role=="Admin")
       //   navigate("/admin_page")
-      
+
     }).catch((err) => {
       setLoginText("Login")
-      console.log("error response",err.response)
-      if(!err.response)
+      console.log("error response", err.response)
+      if (!err.response)
         toast.error("Server is not responding")
-      else if(err.response)
-      {
-        toast.error(err.response.data);    
+      else if (err.response) {
+        toast.error(err.response.data);
       }
     });
   };
@@ -64,9 +56,9 @@ function Login() {
       style={{ padding: "30px 30px" }}
     >
       <Toaster
-            position="top-center"
-            reverseOrder={false}
-          />
+        position="top-center"
+        reverseOrder={false}
+      />
       <form className="form flex flex-col" onSubmit={handleSubmit(formSubmit)}>
         <label htmlFor="Username">Email</label>
         <input
@@ -107,6 +99,32 @@ function Login() {
         <button className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-full">
           {loginButtonText}
         </button>
+
+          <br/>
+
+        <p className="text-center">or</p>
+
+        <br/>
+
+        <form>
+            <GoogleLogin className="w-44"
+            onSuccess={(credentialResponse) => {
+
+              const data = {
+                email : jwtDecode(credentialResponse.credential).email
+              }
+              formSubmit(data)
+              // googleAuthFormSubmit(data)
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+            
+            
+          </form>
+
+
 
         <div className="mt-3">
           <Link to={"/register"} className="nav-link ">

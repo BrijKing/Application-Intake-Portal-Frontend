@@ -19,3 +19,9 @@ export const registerAPI = async (data) => {
     return res.data;
 };
 
+export const registWithGoogle = async (data) => {
+    const res = await api.post("http://localhost:8080/registerWithGoogle", data, {withCredentials: true});
+
+    return res.data;
+
+}

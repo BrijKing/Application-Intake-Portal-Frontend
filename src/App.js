@@ -17,6 +17,7 @@ import RichTextEditor from "./components/text-editor/RichTextEditor";
 import jwtDecode from "jwt-decode";
 import PasswordForm from "./components/passwordForm/PasswordForm";
 import { Typography } from "@material-ui/core";
+import SelectRole from "./components/SelectRole/SelecRole";
 
 function App() {
 
@@ -38,7 +39,8 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/:email" element={<Home />} />
         <Route exact path="/register" element={<Register />} />
-
+        <Route exact path="/selectRole" element={<SelectRole />} />
+        
         <Route exact path="/password/:email/:verification_id/:expireTime" element={<PasswordForm />} />
         <Route path="/admin_page" element={<AdminPage />}  >
           <Route path="add" element={<AddCustomerForApprovement />} />
